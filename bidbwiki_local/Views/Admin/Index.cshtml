@@ -1,0 +1,65 @@
+﻿@model IEnumerable<bidbwiki_local.Posts>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<h3 style="margin-left:35vw">Son 5 Gönderi</h3>
+
+
+    @if (Session["UserName"] != null)
+    {
+        <table class="table">
+            <tr>
+
+                <th>
+                    Gönderi Adı
+                </th>
+                <th>
+                    Kategori
+                </th>
+
+                <th>
+                    Oluşturan
+                </th>
+                <th>
+                   Oluşturulma Zamanı
+                </th>
+            </tr>
+
+
+
+            @foreach (var item in Model)
+            {
+        <tr>
+
+            <td>
+                @Html.ActionLink(item.Post_Name, "PostDetails", new { id = item.post_id })
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Users.name)
+            </td>
+
+            <td>
+
+                @Html.DisplayFor(modelItem => item.Create_Time)
+            </td>
+
+        </tr>
+            }
+        </table>
+
+    }
+    else
+    {
+        <div class="mx-auto" style="width:900px;">
+            <h1>GİRİŞ SAĞLAYAMIYORSANIZ BİLGİ İŞLEM DAİRESİYLE İLETİŞİME GEÇİNİZ!</h1>
+            </div>
+            }
+            
+            

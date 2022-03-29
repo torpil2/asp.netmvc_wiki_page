@@ -1,0 +1,82 @@
+﻿@model IEnumerable<bidbwiki_local.Posts>
+
+
+@{
+    ViewBag.Title = "UserDashBoard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+@{
+    ViewBag.Title = "UserDashBoard";
+}
+
+<fieldset>
+    <legend> User DashBoard </legend>
+
+    <label>Kullanıcı Adı: </label>
+    @if (Session["UserName"] != null)
+    {
+
+        <label>
+            @Session["UserName"].ToString()
+
+            userid =   @Session["UserID"].ToString()
+        </label>
+    }
+</fieldset>
+
+
+@if (Session["UserName"] != null)
+{
+    <table class="table">
+        <tr>
+
+            <th>
+                Gönderi Adı
+            </th>
+            <th>
+                Kategori
+            </th>
+
+            <th>
+                Oluşturan
+            </th>
+            <th>
+                Oluşturulma Zamanı
+            </th>
+        </tr>
+
+
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.ActionLink(item.Post_Name, "PostDetails", new { id = item.post_id },  new { @style = "color:#534340;text-shadow: 0px 3px 5px #CEAB93;" })
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Users.name)
+                </td>
+
+                <td>
+
+                    @Html.DisplayFor(modelItem => item.Create_Time)
+                </td>
+
+            </tr>
+        }
+    </table>
+
+}
+else
+{
+    <div class="mx-auto" style="width:900px;">
+        <h1>GİRİŞ SAĞLAYAMIYORSANIZ BİLGİ İŞLEM DAİRESİYLE İLETİŞİME GEÇİNİZ!</h1>
+    </div>
+}

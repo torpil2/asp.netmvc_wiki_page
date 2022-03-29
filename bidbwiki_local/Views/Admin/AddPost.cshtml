@@ -1,0 +1,46 @@
+﻿  @model bidbwiki_local.Posts
+
+@{
+    ViewBag.Title = "AddPost";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Yeni Gönderi</h2>
+
+@using (Html.BeginForm("AddPostFunc", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+  
+    
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+       <label>Başlık</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Post_Name, new { htmlAttributes = new { @class = "form-control" } })
+            @*@Html.ValidationMessageFor(model => model.Item1.Post_Name, "", new { @class = "text-danger" })*@
+        </div>
+    </div>
+
+   
+
+    <div class="form-group">
+      Kategori Seç
+        @Html.DropDownListFor(k => k.Category_ID,(List<SelectListItem>)ViewBag.dgrcat, new {@class="form-control" } )
+        <div class="col-md-10">
+  
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Tüm Gönderilere Dön", "ViewPosts")
+</div>

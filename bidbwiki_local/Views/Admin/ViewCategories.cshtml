@@ -1,0 +1,43 @@
+﻿@model IEnumerable<bidbwiki_local.Category>
+
+@{
+    ViewBag.Title = "Kategoriler";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<p>
+    <a href="/Admin/AddCategory" class="btn btn-success" role="button" aria-pressed="true">Yeni Kategori Ekle</a>
+</p>
+<h2>Kategoriler</h2>
+<table class="table">
+    <tr>
+        <th>
+           Kategori Adı
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.name)*@
+            @Html.ActionLink(item.name, "ViewPostsWithCat", new { id = item.id })
+        </td>
+        <td>
+
+            <!--Silme İşlemi Eklenecek-->
+            @using (Html.BeginForm("DeleteCat", "Admin", new { id = @item.id }, FormMethod.Post, new { style = "; margin-top:0px;float:right", @class = "fa fa-" }))
+            {
+
+                <input type="submit" value="Sil" class="btn btn-danger btn-sm" />
+
+
+            }
+
+        </td>
+    </tr>
+}
+
+</table>

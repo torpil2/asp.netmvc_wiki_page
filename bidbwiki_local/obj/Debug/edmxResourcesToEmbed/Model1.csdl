@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="bidbwikiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Posts" Relationship="Self.FK_Posts_Category" FromRole="Category" ToRole="Posts" />
+  </EntityType>
+  <EntityType Name="Description">
+    <Key>
+      <PropertyRef Name="desc_id" />
+    </Key>
+    <Property Name="desc_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="post_ID" Type="Int32" Nullable="false" />
+    <Property Name="user_ID" Type="Int32" />
+    <Property Name="Description_Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="View_order" Type="Int32" />
+    <NavigationProperty Name="Posts" Relationship="Self.FK_Description_Posts" FromRole="Description" ToRole="Posts" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Description_Users" FromRole="Description" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Images">
+    <Key>
+      <PropertyRef Name="img_id" />
+    </Key>
+    <Property Name="img_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="post_ID" Type="Int32" />
+    <Property Name="img_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="View_order" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Posts" Relationship="Self.FK_Images_Posts" FromRole="Images" ToRole="Posts" />
+  </EntityType>
+  <EntityType Name="Posts">
+    <Key>
+      <PropertyRef Name="post_id" />
+    </Key>
+    <Property Name="post_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_ID" Type="Int32" Nullable="false" />
+    <Property Name="Category_ID" Type="Int32" />
+    <Property Name="Post_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Create_Time" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Category" Relationship="Self.FK_Posts_Category" FromRole="Posts" ToRole="Category" />
+    <NavigationProperty Name="Description" Relationship="Self.FK_Description_Posts" FromRole="Posts" ToRole="Description" />
+    <NavigationProperty Name="Images" Relationship="Self.FK_Images_Posts" FromRole="Posts" ToRole="Images" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Posts_Users" FromRole="Posts" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Profile_Pictures">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_ID" Type="Int32" Nullable="false" />
+    <Property Name="Path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Profile_Pictures_Users" FromRole="Profile_Pictures" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Reminders">
+    <Key>
+      <PropertyRef Name="reminder_id" />
+    </Key>
+    <Property Name="reminder_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_ID" Type="Int32" Nullable="false" />
+    <Property Name="text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="create_time" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Reminders_Users" FromRole="Reminders" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="username" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="created_time" Type="DateTime" Precision="3" />
+    <Property Name="last_login" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Description" Relationship="Self.FK_Description_Users" FromRole="Users" ToRole="Description" />
+    <NavigationProperty Name="Posts" Relationship="Self.FK_Posts_Users" FromRole="Users" ToRole="Posts" />
+    <NavigationProperty Name="Profile_Pictures" Relationship="Self.FK_Profile_Pictures_Users" FromRole="Users" ToRole="Profile_Pictures" />
+    <NavigationProperty Name="Reminders" Relationship="Self.FK_Reminders_Users" FromRole="Users" ToRole="Reminders" />
+  </EntityType>
+  <Association Name="FK_Posts_Category">
+    <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+    <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Posts">
+        <PropertyRef Name="Category_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Description_Posts">
+    <End Role="Posts" Type="Self.Posts" Multiplicity="1" />
+    <End Role="Description" Type="Self.Description" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Posts">
+        <PropertyRef Name="post_id" />
+      </Principal>
+      <Dependent Role="Description">
+        <PropertyRef Name="post_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Description_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Description" Type="Self.Description" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="Description">
+        <PropertyRef Name="user_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Images_Posts">
+    <End Role="Posts" Type="Self.Posts" Multiplicity="0..1" />
+    <End Role="Images" Type="Self.Images" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Posts">
+        <PropertyRef Name="post_id" />
+      </Principal>
+      <Dependent Role="Images">
+        <PropertyRef Name="post_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Posts_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="Posts">
+        <PropertyRef Name="user_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Profile_Pictures_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Profile_Pictures" Type="Self.Profile_Pictures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="Profile_Pictures">
+        <PropertyRef Name="user_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reminders_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Reminders" Type="Self.Reminders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="Reminders">
+        <PropertyRef Name="user_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="bidbwikiEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Category" EntityType="Self.Category" />
+    <EntitySet Name="Description" EntityType="Self.Description" />
+    <EntitySet Name="Images" EntityType="Self.Images" />
+    <EntitySet Name="Posts" EntityType="Self.Posts" />
+    <EntitySet Name="Profile_Pictures" EntityType="Self.Profile_Pictures" />
+    <EntitySet Name="Reminders" EntityType="Self.Reminders" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <AssociationSet Name="FK_Posts_Category" Association="Self.FK_Posts_Category">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="Posts" EntitySet="Posts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Description_Posts" Association="Self.FK_Description_Posts">
+      <End Role="Posts" EntitySet="Posts" />
+      <End Role="Description" EntitySet="Description" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Description_Users" Association="Self.FK_Description_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Description" EntitySet="Description" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Images_Posts" Association="Self.FK_Images_Posts">
+      <End Role="Posts" EntitySet="Posts" />
+      <End Role="Images" EntitySet="Images" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Posts_Users" Association="Self.FK_Posts_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Posts" EntitySet="Posts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Profile_Pictures_Users" Association="Self.FK_Profile_Pictures_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Profile_Pictures" EntitySet="Profile_Pictures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reminders_Users" Association="Self.FK_Reminders_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Reminders" EntitySet="Reminders" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

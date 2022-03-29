@@ -1,0 +1,83 @@
+﻿@model IEnumerable<bidbwiki_local.Posts>
+
+@{
+    ViewBag.Title = "ViewPosts";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+
+
+<p>
+    <a href="/Admin/Addpost" class="btn btn-success" role="button" aria-pressed="true">Yeni Gönderi Oluştur</a>
+
+</p>
+
+@foreach (var item in Model)
+{
+    <div class="card text-center">
+        <div class="card-header">
+            @Html.ActionLink(item.Post_Name, "PostDetails", new { id = item.post_id }, new { style = "color:red;font-size:20px;margin:0px;padding:0px;" }) | @if (item.Category_ID != null) { @Html.ActionLink(item.Category.name, "ViewPostsWithCat", new { id = item.Category_ID }) }
+        </div>
+        @*<div class="card-body">
+
+            <a class="btn btn-info btn-sm" role="button" href="/Admin/PostDetails/@item.post_id">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+                Görüntüle
+            </a>         
+        </div>*@
+    <div class="card-footer text-muted" style="align-content:center;">
+        <span style="margin-left:9vw;">
+            @Html.DisplayFor(modelItem => item.Create_Time)  | @Html.DisplayFor(ModelItem => item.Users.name)
+
+        </span>
+
+        @using (Html.BeginForm("DeletePost", "Admin", new { id = @item.post_id }, FormMethod.Post, new { style = "; margin-top:0px;float:right", @class = "fa fa-" }))
+        {
+
+            <input type="submit" value="Sil" class="btn btn-danger btn-sm" />
+
+
+        }
+
+        @if (item.Category_ID != null)
+        {
+            <a class="btn btn-dark btn-sm" role="button" href="/Admin/ChangeCateGory/@item.post_id" style="margin-top:0px;margin-right:6px;float:right">
+
+                Kategori Değiştir
+            </a>
+        }
+        else
+        {
+            <a class="btn btn-success btn-sm" role="button" href="/Admin/ChangeCateGory/@item.post_id" style="margin-top:0px;margin-right:6px;float:right">
+
+                Kategori Ekle
+            </a>
+        }
+
+        @if (item.Description.Count <= 0)
+        {
+            <a class="btn btn-warning btn-sm" role="button" href="/Admin/EditPost/@item.post_id" style="margin-top:0px;margin-right:6px;float:right">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+                Düzenle
+            </a>
+        }
+        @*else
+                {
+             <a class="btn btn-warning btn-sm" role="button" href="/Admin/DescpPost/@item.post_id" style="margin-top:0px;margin-right:6px;float:right">
+                 <i class="fa fa-pencil" aria-hidden="true"></i>
+                 Düzenle Değiştir
+             </a>
+                }*@
+
+    </div>
+    </div>
+}
+
+
+    <script>
+        $(function () {
+            $('a#submit_link').click(function () {
+                $('form#myformdel').submit();
+            });
+        });
+    </script>

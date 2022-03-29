@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="bidbwikiModelStoreContainer" CdmEntityContainer="bidbwikiEntities1">
+    <EntitySetMapping Name="Category">
+      <EntityTypeMapping TypeName="bidbwikiModel.Category">
+        <MappingFragment StoreEntitySet="Category">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Description">
+      <EntityTypeMapping TypeName="bidbwikiModel.Description">
+        <MappingFragment StoreEntitySet="Description">
+          <ScalarProperty Name="desc_id" ColumnName="desc_id" />
+          <ScalarProperty Name="post_ID" ColumnName="post_ID" />
+          <ScalarProperty Name="user_ID" ColumnName="user_ID" />
+          <ScalarProperty Name="Description_Text" ColumnName="Description_Text" />
+          <ScalarProperty Name="View_order" ColumnName="View_order" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Images">
+      <EntityTypeMapping TypeName="bidbwikiModel.Images">
+        <MappingFragment StoreEntitySet="Images">
+          <ScalarProperty Name="img_id" ColumnName="img_id" />
+          <ScalarProperty Name="post_ID" ColumnName="post_ID" />
+          <ScalarProperty Name="img_path" ColumnName="img_path" />
+          <ScalarProperty Name="View_order" ColumnName="View_order" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Posts">
+      <EntityTypeMapping TypeName="bidbwikiModel.Posts">
+        <MappingFragment StoreEntitySet="Posts">
+          <ScalarProperty Name="post_id" ColumnName="post_id" />
+          <ScalarProperty Name="user_ID" ColumnName="user_ID" />
+          <ScalarProperty Name="Category_ID" ColumnName="Category_ID" />
+          <ScalarProperty Name="Post_Name" ColumnName="Post_Name" />
+          <ScalarProperty Name="Create_Time" ColumnName="Create_Time" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Profile_Pictures">
+      <EntityTypeMapping TypeName="bidbwikiModel.Profile_Pictures">
+        <MappingFragment StoreEntitySet="Profile_Pictures">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="user_ID" ColumnName="user_ID" />
+          <ScalarProperty Name="Path" ColumnName="Path" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reminders">
+      <EntityTypeMapping TypeName="bidbwikiModel.Reminders">
+        <MappingFragment StoreEntitySet="Reminders">
+          <ScalarProperty Name="reminder_id" ColumnName="reminder_id" />
+          <ScalarProperty Name="user_ID" ColumnName="user_ID" />
+          <ScalarProperty Name="text" ColumnName="text" />
+          <ScalarProperty Name="create_time" ColumnName="create_time" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="bidbwikiModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="created_time" ColumnName="created_time" />
+          <ScalarProperty Name="last_login" ColumnName="last_login" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

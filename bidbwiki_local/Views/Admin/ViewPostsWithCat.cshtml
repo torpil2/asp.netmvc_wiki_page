@@ -1,0 +1,106 @@
+﻿@model IEnumerable<bidbwiki_local.Posts>
+
+@{
+    ViewBag.Title = "ViewPostsWithCat";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+<style>
+    table {
+        width: 100%;
+    }
+
+    th, td {
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    td {
+        font-weight: 600;
+    }
+
+    th {
+        font-weight: 800;
+        background-color: #f95959;
+        color: #ececec;
+        font-family: Arial Black;
+        text-decoration: underline;
+    }
+
+    tr:hover {
+        background-color: #79c2d0;
+    }
+</style>
+
+<h2>ViewPosts</h2>
+
+<p>
+    <a href="/Admin/Addpost" class="btn btn-success" role="button" aria-pressed="true">Yeni Gönderi Oluştur</a>
+
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Gönderi Adı
+        </th>
+        <th>
+            Kategori
+        </th>
+        <th>
+            Oluşturan Kullanıcı
+
+        </th>
+        <th>
+            Oluşturma Zamanı
+
+        </th>
+        <th>
+            Gönderi İşlemleri
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Post_Name, "EditPost", new { id = item.post_id })
+
+            </td>
+            <td>
+
+                @Html.DisplayFor(modelItem => item.Category.name)
+
+            </td>
+            <td>
+                @Html.DisplayFor(ModelItem => item.Users.name)
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Create_Time)
+            </td>
+            <td>
+                <a class="btn btn-info btn-sm" role="button" href="/Admin/PostDetails/@item.post_id">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                    Görüntüle
+                </a>
+                <a class="btn btn-warning btn-sm" role="button" href="/Admin/EditPost/@item.post_id">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                    Düzenle
+                </a>
+                <a class="btn btn-danger btn-sm" role="button" href="/Admin/DeletePost/@item.post_id">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                    Sil
+                </a>
+             
+                    @*@Html.ActionLink("Gönderiyi Düzenle", "EditPost", new { id = item.post_id })*@
+                    @*@Html.ActionLink("Gönderiyi Görüntüle", "PostDetails", new { id = item.post_id }) |*@
+
+                    @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                </td>
+        </tr>
+    }
+
+</table>
+
+<a class="btn btn-info " role="button" href="/Admin/ViewCategories">  <i class="fa fa-undo" aria-hidden="true"></i> Kategorilere Dön</a>

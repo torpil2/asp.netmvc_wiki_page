@@ -1,0 +1,74 @@
+﻿@model IEnumerable<bidbwiki_local.Users>
+
+@{
+    ViewBag.Title = "ViewUsers";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<a href="/Admin/AddUser" class="btn btn-success" role="button" aria-pressed="true">Yeni Kullanıcı Ekle</a>
+
+
+
+@try
+{
+
+    <table class="table">
+        <tr>
+            <th>
+                İsim
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Kullanıcı Adı
+            </th>
+            <th>
+                Oluşturulma Tarihi
+            </th>
+            <th>
+                Son Giriş Zamanı
+            </th>
+            <th></th>
+        </tr>
+
+
+
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.name)*@
+                    @item.name
+                </td>
+                <td>
+                    @item.email
+                </td>
+                <td>
+                    @item.username
+
+                </td>
+                <td>
+                    @item.created_time
+
+                </td>
+                <td>
+                    @item.last_login
+
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+catch (Exception)
+{
+    <td></td>
+
+}

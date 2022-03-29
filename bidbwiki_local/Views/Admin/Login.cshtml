@@ -1,0 +1,49 @@
+﻿@model bidbwiki_local.Users
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="col-md-6" style="margin-left:22%;"> 
+    <div class="card-body login-card-body">
+        <p class="login-box-msg">Giriş Yap</p>
+
+        @using (Html.BeginForm("Login", "Admin", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+           
+            <div class="input-group mb-3">
+
+                @Html.TextBoxFor(a => a.username, new { @class = "form-control ", placeholder = "Kullanıcı adı" })
+                <div class="input-group-append">
+                    <div class="input-group-text">
+
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                @*<input type="password" class="form-control" placeholder="Password">*@
+                @Html.PasswordFor(a => a.password, new { @class = "form-control", placeholder = "Password" })
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-lock"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                </div>
+
+            </div>
+        }
+
+
+
+    </div>
+</div>
