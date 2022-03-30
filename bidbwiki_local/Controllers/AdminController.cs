@@ -9,16 +9,17 @@ using System.IO;
 using System.Drawing;
 using System.Data.SqlClient;
 using System.Data.Entity;
-
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace bidbwiki_local.Controllers
 {
-
+    
 
     public class AdminController : Controller
     {
 
-
+        
 
         //Users deneme = new Users();
         bidbwikiEntities1 dbContext = new bidbwikiEntities1();
@@ -59,6 +60,8 @@ namespace bidbwiki_local.Controllers
             return View();
         }
 
+       
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(Users objUser)
@@ -66,17 +69,45 @@ namespace bidbwiki_local.Controllers
             if (ModelState.IsValid)
                 using (bidbwikiEntities1 db = new bidbwikiEntities1())
                 {
-                    var obj = db.Users.Where(a => (a.username.Equals(objUser.username)) && a.password.Equals(objUser.password)).FirstOrDefault();
-                    if (obj != null)
+                    var  pass = objUser.password;                                       
+                        
+
+                        var objid = db.Users.Where(a => (a.username.Equals(objUser.username))).FirstOrDefault();
+
+                        
+                           bool iscrypted = (objid.password.Length % 4 == 0) && Regex.IsMatch(objid.password, @"^[a-zA-Z0-9\+/]*={0,3}$", RegexOptions.None);
+                    if(iscrypted)
                     {
-                        Session["UserID"] = obj.user_id;
-                        Session["UserName"] = obj.username.ToString();
-                        obj.last_login = DateTime.Now;
+                        var valueBytes = Encoding.UTF8.GetBytes(pass);
+                        string encodedpass = Convert.ToBase64String(valueBytes);
+                        var obj = db.Users.Where(a => (a.username.Equals(objUser.username)) && a.password.Equals(encodedpass)).FirstOrDefault();
+                        if (obj != null)
+                        {
+                           
+                            Session["UserID"] = obj.user_id;
+                            Session["UserName"] = obj.username.ToString();
+                            obj.last_login = DateTime.Now;
 
-                        db.SaveChanges();
-                        return RedirectToAction("UserDashboard");
+                            db.SaveChanges();
+                            return RedirectToAction("UserDashboard");
 
+                        }
                     }
+                    else
+                    {
+                        var obj = db.Users.Where(a => (a.username.Equals(objUser.username)) && a.password.Equals(objUser.password)).FirstOrDefault();
+                        if (obj != null)
+                        {
+                            Session["UserID"] = obj.user_id;
+                            Session["UserName"] = obj.username.ToString();
+                            obj.last_login = DateTime.Now;
+
+                            db.SaveChanges();
+                            return RedirectToAction("UserDashboard");
+
+                        }
+                    }                        
+                                          
                 }
             return View(objUser);
 
@@ -147,7 +178,10 @@ namespace bidbwiki_local.Controllers
                     user.name = User.name;
                     user.email = User.email;
                     user.username = User.username;
-                    user.password = User.password;
+                    var valueBytes = Encoding.UTF8.GetBytes(User.password);
+                    string encodedpass = Convert.ToBase64String(valueBytes);
+                    user.password = encodedpass;
+                   // user.password = User.password;
                     user.created_time = DateTime.Today;
                     db.Users.Add(user);
                     db.SaveChanges();
@@ -351,7 +385,7 @@ namespace bidbwiki_local.Controllers
 
                     Posts post = new Posts();
                     post.Post_Name = postform.Post_Name;
-                    post.Category_ID = postform.Category_ID;
+                    post.Category_ID = postform.Category_ID;    
                     post.Create_Time = DateTime.Now;
                     post.user_ID = (Int32)Session["UserID"];
                     db.Posts.Add(post);
@@ -542,9 +576,12 @@ namespace bidbwiki_local.Controllers
 
                         string sImageName = vFileName + DateTime.Now.ToString("YYYYMMDDHHMMSS");
 
-                        var vImageSavePath = Server.MapPath("/UpImages/") + sImageName + vExtension;
-                        //sImageName = sImageName + vExtension;  
-                        vReturnImagePath = "/UpImages/" + sImageName + vExtension;
+                        var valueBytes = Encoding.UTF8.GetBytes(sImageName);
+                         string encodedpath = Convert.ToBase64String(valueBytes);
+
+                var vImageSavePath = Server.MapPath("/UpImages/") + encodedpath + vExtension;
+                        //sImageName = sImageName + vExtension;     
+                        vReturnImagePath = "/UpImages/" + encodedpath + vExtension;
                         ViewBag.Msg = vImageSavePath;
                         var path = vImageSavePath;
 

@@ -2271,6 +2271,9 @@
     <Content Include="Summernote\summernote.min.css" />
     <Content Include="Summernote\summernote.min.js" />
     <Content Include="Summernote\summernote.min.js.LICENSE.txt" />
+    <Content Include="UpImages\istockphoto-106444518-612x612YYYY03DD1603SS.jpg" />
+    <Content Include="UpImages\istockphoto-135940055-612x612YYYY03DD1603SS.jpg" />
+    <Content Include="UpImages\istockphoto-180519603-612x612YYYY03DD1603SS.jpg" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -2631,7 +2634,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="UpImages\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
